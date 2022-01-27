@@ -26,4 +26,6 @@ clean:
 fclean:		clean
 			rm -rdf ${NAME}
 
-.PHONY:		all libft clean fclean
+re:			fclean all
+
+.PHONY:		all libft clean fclean re
