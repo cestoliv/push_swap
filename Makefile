@@ -2,7 +2,8 @@ NAME	=	push_swap
 SRCS	=	src/main.c \
 			src/stack/swap.c \
 			src/stack/push.c \
-			src/stack/rotate.c
+			src/stack/rotate.c \
+			src/sort/sort.c
 OBJS	=	${SRCS:.c=.o}
 HEADERS	=	include/push_swap.h
 CC		=	clang -Wall -Werror -Wextra
