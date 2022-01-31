@@ -6,11 +6,11 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:44:54 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/11 12:30:31 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:10:46 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../include/ft_printf.h"
 
 int	process_normal(const char *str, va_list *params, t_opt opt)
 {

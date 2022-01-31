@@ -6,11 +6,11 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:12:32 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/11 12:31:48 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:10:01 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "../../../include/ft_printf.h"
 
 static int	print_number_base(int nbr, char *base)
 {

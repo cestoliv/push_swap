@@ -6,11 +6,11 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:06:00 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/11 12:30:59 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:10:28 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "../../../include/ft_printf.h"
 
 int	print_str(char *str)
 {

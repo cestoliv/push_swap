@@ -6,12 +6,11 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 09:50:24 by ocartier          #+#    #+#             */
-/*   Updated: 2021/12/14 12:18:55 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:04:51 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdlib.h>
+#include "../../include/get_next_line.h"
 
 void	shiftstr(char **str, size_t start)
 {

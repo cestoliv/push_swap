@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:04 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/31 11:41:32 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:17:33 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 		cur_a++;
 	}
 	sort(&a, &b);
-	print_stack(a);
-	ft_printf("   b\n");
-	print_stack(b);
+	//print_stack(a);
+	//ft_printf("   b\n");
+	//print_stack(b);
 }
