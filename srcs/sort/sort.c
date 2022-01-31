@@ -29,9 +29,6 @@ void	sort_3(t_stack *a)
 
 void	sort_5(t_stack *a, t_stack *b)
 {
-	int	rotations;
-
-	rotations = 0;
 	while (a->len > 3)
 	{
 		push(b, a);
