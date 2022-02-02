@@ -17,7 +17,14 @@ P_LST_SRCS	:=	main.c \
 				sort/sort_utils.c \
 				sort/sort.c
 P_LST_OBJS	:=	$(P_LST_SRCS:.c=.o)
-C_LST_SRCS	:=	checker.c
+C_LST_SRCS	:=	checker.c \
+				parse.c \
+				utils.c \
+				stack/swap.c \
+				stack/push.c \
+				stack/rotate.c \
+				sort/min_max.c \
+				sort/sort_utils.c
 C_LST_OBJS	:=	$(C_LST_SRCS:.c=.o)
 LST_INCS	:=	push_swap.h
 
@@ -43,11 +50,11 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 all:		libft $(NAME) checker
 
 $(NAME):	$(P_OBJS)
-	@$(CC) $^ $(FLAGS) -o $@
+	@$(CC) $(P_OBJS) $(FLAGS) -o $@
 	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
-checker: $(C_OBJS)
-	@$(CC) $^ $(FLAGS) -o $@
+checker:	libft $(C_OBJS)
+	@$(CC) $(C_OBJS) $(FLAGS) -o $@
 	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
 libft:

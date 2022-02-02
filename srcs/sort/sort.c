@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 11:42:54 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:10:36 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	sort(t_stack *a, t_stack *b)
 {
 	if (!is_sorted(*a))
 	{
-		if (a->len == 3)
+		if (a->len <= 3)
 			sort_3(a);
 		else if (a->len > 3)
 			sort_5(a, b);
