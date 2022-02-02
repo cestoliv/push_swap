@@ -1,24 +1,30 @@
 NAME		:=	push_swap
 
-CC			:=	clang -Wall -Werror -Wextra
+CC			:=	clang -Wall -Werror -Wextra -g
 FLAGS		:=	-Llibft -lft
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	main.c \
+P_LST_SRCS	:=	main.c \
+				parse.c \
+				utils.c \
 				stack/swap.c \
 				stack/push.c \
 				stack/rotate.c \
 				sort/min_max.c \
 				sort/sort_utils.c \
 				sort/sort.c
-LST_OBJS	:=	$(LST_SRCS:.c=.o)
+P_LST_OBJS	:=	$(P_LST_SRCS:.c=.o)
+C_LST_SRCS	:=	checker.c
+C_LST_OBJS	:=	$(C_LST_SRCS:.c=.o)
 LST_INCS	:=	push_swap.h
 
-SRCS		:=	$(addprefix $(DIR_SRCS)/, $(LST_SRCS))
-OBJS		:=	$(addprefix $(DIR_OBJS)/, $(LST_OBJS))
+P_SRCS		:=	$(addprefix $(DIR_SRCS)/, $(P_LST_SRCS))
+C_SRCS		:=	$(addprefix $(DIR_SRCS)/, $(C_LST_SRCS))
+P_OBJS		:=	$(addprefix $(DIR_OBJS)/, $(P_LST_OBJS))
+C_OBJS		:=	$(addprefix $(DIR_OBJS)/, $(C_LST_OBJS))
 INCS		:=	$(addprefix $(DIR_INCS)/, $(LST_INCS))
 
 ERASE		=	\033[2K\r
@@ -34,9 +40,13 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 	@$(CC) -I $(DIR_INCS) -c $< -o $@
 	@printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
-all:		libft $(NAME)
+all:		libft $(NAME) checker
 
-$(NAME):	$(OBJS)
+$(NAME):	$(P_OBJS)
+	@$(CC) $^ $(FLAGS) -o $@
+	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
+
+checker: $(C_OBJS)
 	@$(CC) $^ $(FLAGS) -o $@
 	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
@@ -51,7 +61,7 @@ clean:
 
 fclean:		clean
 	@printf "$(YELLOW)$(NAME) removed$(END)\n"
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) checker
 	@printf "libft : "
 	@make fclean -C libft
 

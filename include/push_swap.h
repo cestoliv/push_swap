@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/31 16:15:07 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/02 11:27:19 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 # include "../libft/include/libft.h"
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -39,4 +40,10 @@ int		get_insert_pos(t_stack st, int num);
 void	rot_min_to_top(t_stack *st);
 // sort.c
 void	sort(t_stack *a, t_stack *b);
+// parse.c
+int		number_of_digits(int argc, char **argv);
+int		fill_stack(t_stack *a, int num_digit, char **argv);
+// utils.c
+int		find_duplicates(t_stack st);
+int		make_stacks(t_stack *a, t_stack *b, int argc, char **argv);
 #endif

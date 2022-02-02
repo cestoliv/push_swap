@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/26 10:07:04 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 11:53:45 by ocartier         ###   ########.fr       */
+/*   Created: 2022/02/02 11:46:48 by ocartier          #+#    #+#             */
+/*   Updated: 2022/02/02 11:53:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,5 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack	a;
-	t_stack	b;
-
-	if (argc < 2)
-		exit(EXIT_SUCCESS);
-	else if (!make_stacks(&a, &b, argc, argv))
-		ft_putstr_fd("Error\n", 2);
-	else if (find_duplicates(a))
-		ft_putstr_fd("Error\n", 2);
-	else
-		sort(&a, &b);
-	free(a.stack);
-	free(b.stack);
+	ft_printf("Hello World!\n");
 }
