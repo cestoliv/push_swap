@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 09:38:34 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:42:36 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int		get_min_pos(t_stack st);
 // sort_utils.c
 int		is_sorted(t_stack st);
 int		get_insert_pos(t_stack st, int num);
-void	rot_min_to_top(t_stack *st, char st_name);
+void	min_top(t_stack *st, char st_name);
+void	min_top_both(t_stack *a, t_stack *b);
 // sort.c
 void	sort(t_stack *a, t_stack *b);
 // parse.c

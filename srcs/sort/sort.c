@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 10:18:30 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:45:15 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sort_5(t_stack *a, t_stack *b)
 		push(a, b);
 		ft_printf("pa\n");
 	}
-	rot_min_to_top(a, 'a');
+	min_top(a, 'a');
 }
 
 void	print_stack(t_stack st)
