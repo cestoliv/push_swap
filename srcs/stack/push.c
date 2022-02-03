@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:42:02 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/26 10:57:48 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:39:17 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ void	push(t_stack *a, t_stack *b)
 		a->stack[a->len] = b->stack[b->len - 1];
 		a->len++;
 		b->len--;
+		a->first = a->stack[a->len - 1];
+		b->first = b->stack[b->len - 1];
 	}
 }

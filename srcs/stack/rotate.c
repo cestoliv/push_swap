@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:58:47 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/26 11:14:43 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:39:51 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	rotate(t_stack *st)
 		}
 		st->stack[0] = first;
 	}
+	st->first = st->stack[st->len - 1];
 }
 
 void	rrotate(t_stack *s1, t_stack *s2)
@@ -51,6 +52,7 @@ void	rev_rotate(t_stack *st)
 		}
 		st->stack[st->len - 1] = last;
 	}
+	st->first = st->stack[st->len - 1];
 }
 
 void	rrev_rotate(t_stack *s1, t_stack *s2)

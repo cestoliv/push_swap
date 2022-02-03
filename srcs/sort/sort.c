@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 12:10:36 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:18:30 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sort_5(t_stack *a, t_stack *b)
 	sort_3(a);
 	while (b->len)
 	{
-		insert_pos = get_insert_pos(*a, b->stack[b->len - 1]);
+		insert_pos = get_insert_pos(*a, b->first);
 		if ((insert_pos) / (double)a->len < 0.5)
 		{
 			while (insert_pos)
@@ -62,7 +62,13 @@ void	sort_5(t_stack *a, t_stack *b)
 		push(a, b);
 		ft_printf("pa\n");
 	}
-	rot_min_to_top(a);
+	rot_min_to_top(a, 'a');
+}
+
+void	print_stack(t_stack st)
+{
+	while (st.len--)
+		ft_printf(" %d\n", st.stack[st.len]);
 }
 
 void	sort(t_stack *a, t_stack *b)
@@ -74,4 +80,11 @@ void	sort(t_stack *a, t_stack *b)
 		else if (a->len > 3)
 			sort_5(a, b);
 	}
+	/*
+	if (is_sorted(*a))
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
+	print_stack(*a);
+	*/
 }

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 11:27:19 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:38:34 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef struct s_stack
 {
 	int	*stack;
+	int	first;
 	int	len;
 }	t_stack;
 
@@ -37,7 +38,7 @@ int		get_min_pos(t_stack st);
 // sort_utils.c
 int		is_sorted(t_stack st);
 int		get_insert_pos(t_stack st, int num);
-void	rot_min_to_top(t_stack *st);
+void	rot_min_to_top(t_stack *st, char st_name);
 // sort.c
 void	sort(t_stack *a, t_stack *b);
 // parse.c

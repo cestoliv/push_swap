@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/31 14:30:54 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:32:39 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int	get_insert_pos(t_stack st, int num)
 	return (-1);
 }
 
-void	rot_min_to_top(t_stack *st)
+void	rot_min_to_top(t_stack *st, char st_name)
 {
+	/*
 	if ((get_min_pos(*st) + 1) / (double)st->len < 0.5)
 	{
 		while (!is_sorted(*st))
 		{
 			rev_rotate(st);
-			ft_printf("rra\n");
+			ft_printf("rr%c\n", st_name);
 		}
 	}
 	else
@@ -65,7 +66,28 @@ void	rot_min_to_top(t_stack *st)
 		while (!is_sorted(*st))
 		{
 			rotate(st);
-			ft_printf("ra\n");
+			ft_printf("r%c\n", st_name);
+		}
+	}
+	*/
+	int	min_pos = get_min_pos(*st) + 1;
+	if ((min_pos) / (double)st->len < 0.5)
+	{
+		while (min_pos)
+		{
+			rev_rotate(st);
+			ft_printf("rr%c\n", st_name);
+			min_pos--;
+		}
+	}
+	else
+	{
+		min_pos = st->len - min_pos;
+		while (min_pos)
+		{
+			rotate(st);
+			ft_printf("r%c\n", st_name);
+			min_pos--;
 		}
 	}
 }

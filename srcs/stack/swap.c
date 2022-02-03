@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:39:08 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/26 10:57:09 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:40:08 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	swap(t_stack *st)
 		st->stack[st->len - 1] = st->stack[st->len - 2];
 		st->stack[st->len - 2] = temp;
 	}
+	st->first = st->stack[st->len - 1];
 }
 
 void	sswap(t_stack *s1, t_stack *s2)
