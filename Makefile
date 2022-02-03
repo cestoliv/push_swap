@@ -41,37 +41,38 @@ GREEN		=	\033[32m
 END			=	\033[0m
 
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
-	@mkdir -p $(DIR_OBJS)
-	@mkdir -p $(DIR_OBJS)/stack
-	@mkdir -p $(DIR_OBJS)/sort
-	@$(CC) -I $(DIR_INCS) -c $< -o $@
-	@printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
+	mkdir -p $(DIR_OBJS)
+	mkdir -p $(DIR_OBJS)/stack
+	mkdir -p $(DIR_OBJS)/sort
+	$(CC) -I $(DIR_INCS) -c $< -o $@
+	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
 all:		libft $(NAME) checker
 
 $(NAME):	$(P_OBJS)
-	@$(CC) $(P_OBJS) $(FLAGS) -o $@
-	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
+	$(CC) $(P_OBJS) $(FLAGS) -o $@
+	printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
-checker:	libft $(C_OBJS)
-	@$(CC) $(C_OBJS) $(FLAGS) -o $@
-	@printf "$(ERASE)$(GREEN)$@ made\n$(END)"
+checker:	$(C_OBJS)
+	$(CC) $(C_OBJS) $(FLAGS) -o $@
+	printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
 libft:
-	@make -C libft
+	make -C libft
 
 clean:
-	@printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
-	@rm -rdf $(DIR_OBJS)
-	@printf "libft : "
-	@make clean -C libft
+	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
+	rm -rdf $(DIR_OBJS)
+	printf "libft : "
+	make clean -C libft
 
 fclean:		clean
-	@printf "$(YELLOW)$(NAME) removed$(END)\n"
-	@rm -rf $(NAME) checker
-	@printf "libft : "
-	@make fclean -C libft
+	printf "$(YELLOW)$(NAME) removed$(END)\n"
+	rm -rf $(NAME) checker
+	printf "libft : "
+	make fclean -C libft
 
 re:			fclean all
 
 .PHONY:		all libft clean fclean re
+.SILENT:
