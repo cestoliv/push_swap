@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 10:45:15 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:58:18 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void	sort(t_stack *a, t_stack *b)
 	else
 		ft_printf("KO\n");
 	print_stack(*a);
+	ft_printf("   b");
+	print_stack(*b);
 	*/
 }

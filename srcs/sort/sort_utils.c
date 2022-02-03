@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 10:38:01 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:52:23 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,11 @@ void	min_top(t_stack *st, char st_name)
 
 void	min_top_both(t_stack *a, t_stack *b)
 {
-	int	min_pos_a;
-	int	min_pos_b;
 	int	a_dir;
 	int	b_dir;
 
-	min_pos_a = get_min_pos(*a) + 1;
-	min_pos_b = get_min_pos(*b) + 1;
-	a_dir = (min_pos_a) / (double)a->len < 0.5;
-	b_dir = (min_pos_b) / (double)b->len < 0.5;
+	a_dir = (get_min_pos(*a) + 1) / (double)a->len < 0.5;
+	b_dir = (get_min_pos(*b) + 1) / (double)b->len < 0.5;
 	while (get_min(*a) != a->first && get_min(*b) != b->first)
 	{
 		if (a_dir && b_dir)
