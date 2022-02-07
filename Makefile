@@ -44,7 +44,7 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 	mkdir -p $(DIR_OBJS)
 	mkdir -p $(DIR_OBJS)/stack
 	mkdir -p $(DIR_OBJS)/sort
-	$(CC) -D CHECK_VERBOSE=1 -I $(DIR_INCS) -c $< -o $@
+	$(CC) -D CHECK_VERBOSE=0 -I $(DIR_INCS) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
 all:		libft $(NAME) checker

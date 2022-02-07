@@ -17,3 +17,24 @@ Stack size 500 (goal : 5500 KO):
 	average	: 32307
 	best	: 29337
 ```
+
+
+## Second algo
+*(commit xx)*
+
+To explain
+
+```
+Stack size 5 (goal : 12 OK):
+	worst	: 12
+	average	: 8
+	best	: 0
+Stack size 100 (goal : 700 OK):
+	worst	: 689
+	average	: 607
+	best	: 519
+Stack size 500 (goal : 5500 KO):
+	worst	: 5812
+	average	: 5478
+	best	: 5143
+```

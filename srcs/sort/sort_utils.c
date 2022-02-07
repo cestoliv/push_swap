@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 11:00:59 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:07:25 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,136 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 
 	a_top_t = a_top + 1;
 	b_top_t = b_top + 1;
+	a_dir = a_top_t / (double)a->len < 0.5;
+	b_dir = b_top_t / (double)b->len < 0.5;
+
+	int	a_rot = a_top_t;
+	if (!a_dir)
+		a_rot = a->len - a_top_t;
+	int	b_rot = b_top_t;
+	if (!b_dir)
+		b_rot = b->len - b_top_t;
+
+	while (a_rot || b_rot)
+	{
+		if (a_rot && b_rot)
+		{
+			if (a_dir && b_dir)
+			{
+				rrev_rotate(a, b);
+				ft_printf("rrr\n");
+			}
+			else if (!a_dir && !b_dir)
+			{
+				rrotate(a, b);
+				ft_printf("rr\n");
+			}
+			else if (a_dir && !b_dir)
+			{
+				rev_rotate(a);
+				ft_printf("rra\n");
+				rotate(b);
+				ft_printf("rb\n");
+			}
+			else if (!a_dir && b_dir)
+			{
+				rotate(a);
+				ft_printf("ra\n");
+				rev_rotate(b);
+				ft_printf("rrb\n");
+			}
+			a_rot--;
+			b_rot--;
+		}
+		else if (a_rot)
+		{
+			if (a_dir)
+			{
+				rev_rotate(a);
+				ft_printf("rra\n");
+			}
+			else
+			{
+				rotate(a);
+				ft_printf("ra\n");
+			}
+			a_rot--;
+		}
+		else if (b_rot)
+		{
+			if (b_dir)
+			{
+				rev_rotate(b);
+				ft_printf("rrb\n");
+			}
+			else
+			{
+				rotate(b);
+				ft_printf("rb\n");
+			}
+			b_rot--;
+		}
+	}
+
+
+/*
+	if (a_dir && b_dir)
+	{
+		rrev_rotate(a, b);
+		ft_printf("rrr\n");
+	}
+	else if (!a_dir && !b_dir)
+	{
+		rrotate(a, b);
+		ft_printf("rr\n");
+		a_top_t++;
+		b_top_t++;
+	}
+	//ft_printf("g %d, %d\n", a_top_t, a->first);
+	*/
+	/*
+	if (a_goal != a->first)
+		rotate_to(a, a_top_t, 'a');
+	if (b_goal != b->first)
+		rotate_to(b, b_top_t, 'b');
+		*/
+/*
+	if (a_top_t / (double)a->len < 0.5)
+	{
+		if (b_top_t / (double)b->len < 0.5)
+		{
+			while (a_top_t)
+			{
+				rev_rotate(a);
+				ft_printf("rr%c\n", 'a');
+				a_top_t--;
+			}
+		}
+		else
+		{
+			while (a_top_t)
+			{
+				rev_rotate(a);
+				ft_printf("rr%c\n", 'a');
+				a_top_t--;
+			}
+		}
+	}
+	else
+	{
+		st_top = st->len - st_top;
+		while (st_top)
+		{
+			rotate(st);
+			ft_printf("r%c\n", st_name);
+			st_top--;
+		}
+	}
+*/
+	/*
 	a_dir = (a_top + 1) / (double)a->len < 0.5;
 	b_dir = (b_top + 1) / (double)b->len < 0.5;
-	while (a_top != a->first && b_top != b->first)
+	while (a->stack[a_top] != a->first && b->stack[b_top] != b->first)
 	{
 		if (a_dir && b_dir)
 		{
@@ -178,10 +305,7 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 			ft_printf("rrb\n");
 		}
 	}
-	if (a_top != a->first)
-		rotate_to(a, a_top, 'a');
-	if (b_top != b->first)
-		rotate_to(b, b_top, 'b');
+	*/
 }
 
 int	get_best_insert(t_stack a, t_stack b)
