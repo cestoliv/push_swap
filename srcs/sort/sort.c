@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 11:42:43 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 23:24:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,35 @@ void	sort_3(t_stack *a)
 	}
 }
 
-void	sort_5(t_stack *a, t_stack *b)
-{
-	int	insert_pos;
+/*
+	int	median;
+	int	last_kept;
 
-	while (a->len > 3)
+	median = get_median(*a);
+	//median = a->first;
+	//ft_printf("med : %d\nnext_min : %d\n", median, get_min_after(*a, 5));
+
+	rotate_to(a, get_pos(*a, median), 'a'); // median to top
+	last_kept = median;
+	rotate(a);
+	ft_printf("ra\n");
+	while (a->first != median)
 	{
-		push(b, a);
-		ft_printf("pb\n");
-	}
-	sort_3(a);
-	while (b->len)
-	{
-		insert_pos = get_insert_pos(*a, b->first);
-		if ((insert_pos) / (double)a->len < 0.5)
+		if (a->first > last_kept)
 		{
-			while (insert_pos)
-			{
-				rev_rotate(a);
-				ft_printf("rra\n");
-				insert_pos--;
-			}
+			last_kept = a->first;
+			rotate(a);
+			ft_printf("ra\n");
 		}
 		else
 		{
-			insert_pos = a->len - insert_pos;
-			while (insert_pos)
-			{
-				rotate(a);
-				ft_printf("ra\n");
-				insert_pos--;
-			}
+			push(b, a);
+			ft_printf("pb\n");
 		}
-		push(a, b);
-		ft_printf("pa\n");
 	}
-	min_top(a, 'a');
-}
+*/
 
-void	sort_new(t_stack *a, t_stack *b)
+void	sort_more(t_stack *a, t_stack *b)
 {
 	while (a->len > 3)
 	{
@@ -77,19 +67,11 @@ void	sort_new(t_stack *a, t_stack *b)
 	{
 		int best_insert = get_best_insert(*a, *b);
 		int insert_pos = get_insert_pos(*a, best_insert);
-		//rotate_to(a, insert_pos - 1, 'a');
-		//rotate_to(b, get_pos(*b, best_insert), 'b');
-		rotate_both_to(a, insert_pos - 1, b, get_pos(*b, best_insert));
+		rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1);
 		push(a, b);
 		ft_printf("pa\n");
 	}
 	min_top(a, 'a');
-}
-
-void	print_stack(t_stack st)
-{
-	while (st.len--)
-		ft_printf(" %d\n", st.stack[st.len]);
 }
 
 void	sort(t_stack *a, t_stack *b)
@@ -99,15 +81,6 @@ void	sort(t_stack *a, t_stack *b)
 		if (a->len <= 3)
 			sort_3(a);
 		else if (a->len > 3)
-			sort_new(a, b);
+			sort_more(a, b);
 	}
-	/*
-	if (is_sorted(*a))
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
-	print_stack(*a);
-	ft_printf("   b");
-	print_stack(*b);
-	*/
 }

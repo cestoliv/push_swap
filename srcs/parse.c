@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:51:21 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 11:41:26 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:56:03 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int	fill_stack(t_stack *a, int num_digit, char **argv)
 			free(splitted[pcur]);
 		free(splitted);
 	}
+	a->first = a->stack[a->len - 1];
 	return (1);
 }

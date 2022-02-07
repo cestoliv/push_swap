@@ -8,6 +8,7 @@ DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
 P_LST_SRCS	:=	main.c \
+				median.c \
 				parse.c \
 				utils.c \
 				stack/swap.c \

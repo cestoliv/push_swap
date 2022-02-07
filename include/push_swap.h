@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 09:59:36 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:21:01 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	rotate_to(t_stack *st, int st_top, char st_name);
 void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top);
 // sort.c
 void	sort(t_stack *a, t_stack *b);
+// median.c
+int		get_median(t_stack a);
+int		get_min_after(t_stack st, int stop);
 // parse.c
 int		number_of_digits(int argc, char **argv);
 int		fill_stack(t_stack *a, int num_digit, char **argv);
