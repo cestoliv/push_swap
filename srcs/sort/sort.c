@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 11:58:18 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:15:01 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,27 @@ void	sort_5(t_stack *a, t_stack *b)
 	min_top(a, 'a');
 }
 
+void	sort_new(t_stack *a, t_stack *b)
+{
+	while (a->len > 3)
+	{
+		push(b, a);
+		ft_printf("pb\n");
+	}
+	sort_3(a);
+	while (b->len)
+	{
+		int best_insert = get_best_insert(*a, *b);
+		int insert_pos = get_insert_pos(*a, best_insert);
+		rotate_to(a, insert_pos - 1, 'a');
+		rotate_to(b, get_pos(*b, best_insert), 'b');
+		//rotate_both_to(a, insert_pos - 1, b, get_pos(*b, best_insert));
+		push(a, b);
+		ft_printf("pa\n");
+	}
+	min_top(a, 'a');
+}
+
 void	print_stack(t_stack st)
 {
 	while (st.len--)
@@ -78,7 +99,7 @@ void	sort(t_stack *a, t_stack *b)
 		if (a->len <= 3)
 			sort_3(a);
 		else if (a->len > 3)
-			sort_5(a, b);
+			sort_new(a, b);
 	}
 	/*
 	if (is_sorted(*a))

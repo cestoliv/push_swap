@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:27:35 by ocartier          #+#    #+#             */
-/*   Updated: 2022/01/31 14:30:01 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:11:12 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,18 @@ int	get_min_pos(t_stack st)
 		if (st.stack[cur] < st.stack[min])
 			min = cur;
 	return (min);
+}
+
+int	get_pos(t_stack st, int num)
+{
+	int	cur;
+
+	cur = 0;
+	while (cur < st.len)
+	{
+		if (st.stack[cur] == num)
+			return (cur);
+		cur++;
+	}
+	return (-1);
 }
