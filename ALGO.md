@@ -19,7 +19,7 @@ Stack size 500 (goal : 5500 KO):
 ```
 
 ## Second algo
-*(commit 69b77f53344da05aa268db5ec234f3f0cb8da76c)*
+*(commit 2a06d15cd4778c58b24a75a18988bd6f8ec9cb97)*
 
 We push in B until we have only three elements left in A. We sort A. As long as B is not empty, we look for the element of B that will require the least number of instructions to reach A (in the right place). We rotate A and B (r{a/b/r}, rr{a/b/r} according to the shortest) to place the element in question on top of B and to be able to push it.
 At the end we rotate A (ra or rra according to the shortest) to put the smallest element on top.
