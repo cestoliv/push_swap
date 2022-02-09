@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/08 16:54:40 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 09:13:12 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		get_insert_pos(t_stack st, int num);
 int		min_top(t_stack *st, char st_name, int verbose);
 void	min_top_both(t_stack *a, t_stack *b);
 int		get_best_insert(t_stack a, t_stack b);
-void	rotate_to(t_stack *st, int st_top, char st_name);
+int		rotate_to(t_stack *st, int st_top, char st_name, int verbose);
 int		rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top, int verbose);
 // sort.c
 void	sort(t_stack *a, t_stack *b);

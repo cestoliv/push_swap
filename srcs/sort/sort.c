@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 09:00:27 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 11:57:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,6 @@ int	sort_3(t_stack *a, int verbose)
 	}
 	return (inst_num);
 }
-
-/*
-	int	median;
-	int	last_kept;
-
-	median = get_median(*a);
-	//median = a->first;
-	//ft_printf("med : %d\nnext_min : %d\n", median, get_min_after(*a, 5));
-
-	rotate_to(a, get_pos(*a, median), 'a'); // median to top
-	last_kept = median;
-	rotate(a);
-	ft_printf("ra\n");
-	while (a->first != median)
-	{
-		if (a->first > last_kept)
-		{
-			last_kept = a->first;
-			rotate(a);
-			ft_printf("ra\n");
-		}
-		else
-		{
-			push(b, a);
-			ft_printf("pb\n");
-		}
-	}
-*/
 
 void	stack_dup(t_stack st, t_stack *dup)
 {
@@ -139,8 +111,8 @@ void	print_stacks(t_stack a, t_stack b, char *line)
 
 int	dry_sort_one(t_stack a, t_stack b)
 {
-	//int		best_insert;
-	//int		insert_pos;
+	int		best_insert;
+	int		insert_pos;
 	int		inst_num;
 
 	inst_num = 0;
@@ -149,26 +121,36 @@ int	dry_sort_one(t_stack a, t_stack b)
 		push(&b, &a);
 		inst_num++;
 	}
-	//ft_printf("find duplicates : %d\n", find_duplicates(a));
 	inst_num += sort_3(&a, 0);
-	/*
+
 	while (b.len)
 	{
 		best_insert = get_best_insert(a, b);
 		insert_pos = get_insert_pos(a, best_insert);
-		inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
+
+		ft_printf("1 insert %d, best %d, len b : %d\n", insert_pos, get_pos(b, best_insert) + 1, b.len);
+/*
+		if (insert_pos == -1)
+			insert_pos = 0;
+*/
+		if (b.len == 1 && get_pos(b, best_insert) == 0)
+			inst_num += rotate_to(&a, insert_pos - 1, 'a', 0);
+		else
+			inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
+
+		//inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
 		push(&a, &b);
 		inst_num++;
 	}
 	inst_num += min_top(&a, 'a', 0);
-	*/
+
 	return (inst_num);
 }
 
 int	dry_sort_two(t_stack a, t_stack b)
 {
-	//int		best_insert;
-	//int		insert_pos;
+	int		best_insert;
+	int		insert_pos;
 	int		inst_num;
 
 	int	median;
@@ -192,25 +174,97 @@ int	dry_sort_two(t_stack a, t_stack b)
 			push(&b, &a);
 			inst_num++;
 		}
-		if (find_duplicates(b))
-		{
-			ft_printf("dup\n");
-			exit(EXIT_FAILURE);
-		}
 	}
-	/*
+
 	while (b.len)
 	{
 		best_insert = get_best_insert(a, b);
 		insert_pos = get_insert_pos(a, best_insert);
+		/*
+		if (find_duplicates(b))
+			ft_printf("?????");
+			*/
+
+		/*
+			- Infinite loop quand :
+				- insert = -1
+		*/
+
+		//inst_num += rotate_to(&a, insert_pos - 1, 'a', 0);
+		//inst_num += rotate_to(&b, get_pos(b, best_insert), 'b', 0);
+
+		ft_printf("2 insert %d, best %d, len b : %d\n", insert_pos, get_pos(b, best_insert) + 1, b.len);
+
+/*
+		if (insert_pos == -1)
+			insert_pos = 0;
+*/
+
+		/*
+		if (best_insert == 1)
+			best_insert = 0;
+			*/
+		//print_stacks(a, b, "yo");
+
+		if (b.len == 1 && get_pos(b, best_insert) == 0)
+			inst_num += rotate_to(&a, insert_pos - 1, 'a', 0);
+		else
+			inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
+		push(&a, &b);
+		inst_num++;
+	}
+	inst_num += min_top(&a, 'a', 0);
+
+	return (inst_num);
+}
+/*
+int	dry_sort_three(t_stack a, t_stack b)
+{
+	int		best_insert;
+	int		insert_pos;
+	int		inst_num;
+
+	int	median;
+	int	last_kept;
+
+	median = a.first;
+	median = get_median(a);
+	rotate_to(&a, get_pos(a, median), 'a', 0); // median to top
+
+	inst_num = 0;
+	last_kept = median;
+	rotate(&a);
+	inst_num++;
+	while (a.first != median)
+	{
+		if (a.first > last_kept)
+		{
+			last_kept = a.first;
+			rotate(&a);
+			inst_num++;
+		}
+		else
+		{
+			push(&b, &a);
+			inst_num++;
+		}
+	}
+
+	while (b.len)
+	{
+		best_insert = get_best_insert(a, b);
+		insert_pos = get_insert_pos(a, best_insert);
+		if (find_duplicates(b))
+			return (-1);
 		inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
 		push(&a, &b);
 		inst_num++;
 	}
 	inst_num += min_top(&a, 'a', 0);
-	*/
+
 	return (inst_num);
 }
+*/
 
 int	compare_sort(t_stack a, t_stack b)
 {
@@ -218,6 +272,7 @@ int	compare_sort(t_stack a, t_stack b)
 	t_stack	t_b;
 	int		sort_one;
 	int		sort_two;
+	//int		sort_three;
 
 	stack_dup(a, &t_a);
 	stack_dup(b, &t_b);
@@ -227,8 +282,21 @@ int	compare_sort(t_stack a, t_stack b)
 	stack_dup(a, &t_a);
 	stack_dup(b, &t_b);
 	sort_two = dry_sort_two(t_a, t_b);
+	free(t_a.stack);
+	free(t_b.stack);
+	/*
+	stack_dup(a, &t_a);
+	stack_dup(b, &t_b);
+	sort_three = dry_sort_three(t_a, t_b);
+	free(t_a.stack);
+	free(t_b.stack);
+	*/
 	if (sort_two < sort_one && sort_two > 0)
 		return (1);
+/*
+	if (sort_three < sort_one && sort_three < sort_two && sort_three > 0)
+		return (2);
+*/
 	return (0);
 }
 
@@ -238,10 +306,21 @@ void	sort_more(t_stack *a, t_stack *b)
 	int	insert_pos;
 	int	median;
 	int	last_kept;
+	int	algo;
 
-	if (compare_sort(*a, *b))
+
+	algo = compare_sort(*a, *b);
+	if (algo)
 	{
+		//if (algo == 1)
 		median = a->first;
+		/*
+		else
+		{
+			median = get_median(*a);
+			rotate_to(a, get_pos(*a, median), 'a', 1);
+		}
+		*/
 		last_kept = median;
 		rotate(a);
 		ft_printf("ra\n");
@@ -259,6 +338,7 @@ void	sort_more(t_stack *a, t_stack *b)
 				ft_printf("pb\n");
 			}
 		}
+
 	}
 	else
 	{
@@ -273,7 +353,17 @@ void	sort_more(t_stack *a, t_stack *b)
 	{
 		best_insert = get_best_insert(*a, *b);
 		insert_pos = get_insert_pos(*a, best_insert);
-		rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
+
+/*
+		if (insert_pos == -1)
+			insert_pos = 0;
+			*/
+		if (b->len == 1 && get_pos(*b, best_insert) == 0)
+			rotate_to(a, insert_pos - 1, 'a', 1);
+		else
+			rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
+
+		//rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
 		push(a, b);
 		ft_printf("pa\n");
 	}

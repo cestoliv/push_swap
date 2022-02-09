@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 08:55:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 11:57:36 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,20 @@ int	get_insert_pos(t_stack st, int num)
 	return (-1);
 }
 
-void	rotate_to(t_stack *st, int st_top, char st_name)
+int	rotate_to(t_stack *st, int st_top, char st_name, int verbose)
 {
+	int	inst_num;
+
+	inst_num = 0;
 	st_top += 1;
 	if (st_top / (double)st->len < 0.5)
 	{
 		while (st_top)
 		{
 			rev_rotate(st);
-			ft_printf("rr%c\n", st_name);
+			if (verbose)
+				ft_printf("rr%c\n", st_name);
+			inst_num++;
 			st_top--;
 		}
 	}
@@ -69,10 +74,13 @@ void	rotate_to(t_stack *st, int st_top, char st_name)
 		while (st_top)
 		{
 			rotate(st);
-			ft_printf("r%c\n", st_name);
+			if (verbose)
+				ft_printf("r%c\n", st_name);
+			inst_num++;
 			st_top--;
 		}
 	}
+	return (inst_num);
 }
 
 int	min_top(t_stack *st, char st_name, int verbose)
