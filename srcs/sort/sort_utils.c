@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 23:27:40 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:16:54 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	get_insert_pos(t_stack st, int num)
 			return (cur);
 		cur++;
 	}
+	ft_printf("bizz");
 	return (-1);
 }
 
@@ -74,17 +75,21 @@ void	rotate_to(t_stack *st, int st_top, char st_name)
 	}
 }
 
-void	min_top(t_stack *st, char st_name)
+int	min_top(t_stack *st, char st_name, int verbose)
 {
 	int	min_pos;
+	int	inst_num;
 
+	inst_num = 0;
 	min_pos = get_min_pos(*st) + 1;
 	if ((min_pos) / (double)st->len < 0.5)
 	{
 		while (min_pos)
 		{
 			rev_rotate(st);
-			ft_printf("rr%c\n", st_name);
+			if (verbose)
+				ft_printf("rr%c\n", st_name);
+			inst_num++;
 			min_pos--;
 		}
 	}
@@ -94,10 +99,13 @@ void	min_top(t_stack *st, char st_name)
 		while (min_pos)
 		{
 			rotate(st);
-			ft_printf("r%c\n", st_name);
+			if (verbose)
+				ft_printf("r%c\n", st_name);
+			inst_num++;
 			min_pos--;
 		}
 	}
+	return (inst_num);
 }
 
 void	min_top_both(t_stack *a, t_stack *b)
@@ -135,20 +143,23 @@ void	min_top_both(t_stack *a, t_stack *b)
 		}
 	}
 	if (get_min(*a) != a->first)
-		min_top(a, 'a');
+		min_top(a, 'a', 1);
 	if (get_min(*b) != b->first)
-		min_top(b, 'b');
+		min_top(b, 'b', 1);
 }
 
-void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
+int	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top, int verbose)
 {
 	int	a_dir;
 	int	a_rot;
 	int	b_dir;
 	int	b_rot;
+	int	inst_num;
 
-	a_top += 1;
-	b_top += 1;
+	//a_top += 1;
+	//b_top += 1;
+
+	inst_num = 0;
 	a_dir = a_top / (double)a->len < 0.5;
 	b_dir = b_top / (double)b->len < 0.5;
 
@@ -159,8 +170,6 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 	if (!b_dir)
 		b_rot = b->len - b_top;
 
-	// TODO: voir si ça vaut pas mieux de forcer le rr / rrr
-
 	while (a_rot || b_rot)
 	{
 		if (a_rot && b_rot)
@@ -168,26 +177,36 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 			if (a_dir && b_dir)
 			{
 				rrev_rotate(a, b);
-				ft_printf("rrr\n");
+				if (verbose)
+					ft_printf("rrr\n");
+				inst_num++;
 			}
 			else if (!a_dir && !b_dir)
 			{
 				rrotate(a, b);
-				ft_printf("rr\n");
+				if (verbose)
+					ft_printf("rr\n");
+				inst_num++;
 			}
 			else if (a_dir && !b_dir)
 			{
 				rev_rotate(a);
-				ft_printf("rra\n");
+				if (verbose)
+					ft_printf("rra\n");
 				rotate(b);
-				ft_printf("rb\n");
+				if (verbose)
+					ft_printf("rb\n");
+				inst_num += 2;
 			}
 			else if (!a_dir && b_dir)
 			{
 				rotate(a);
-				ft_printf("ra\n");
+				if (verbose)
+					ft_printf("ra\n");
 				rev_rotate(b);
-				ft_printf("rrb\n");
+				if (verbose)
+					ft_printf("rrb\n");
+				inst_num += 2;
 			}
 			a_rot--;
 			b_rot--;
@@ -197,12 +216,16 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 			if (a_dir)
 			{
 				rev_rotate(a);
-				ft_printf("rra\n");
+				if (verbose)
+					ft_printf("rra\n");
+				inst_num++;
 			}
 			else
 			{
 				rotate(a);
-				ft_printf("ra\n");
+				if (verbose)
+					ft_printf("ra\n");
+				inst_num++;
 			}
 			a_rot--;
 		}
@@ -211,16 +234,21 @@ void	rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top)
 			if (b_dir)
 			{
 				rev_rotate(b);
-				ft_printf("rrb\n");
+				if (verbose)
+					ft_printf("rrb\n");
+				inst_num++;
 			}
 			else
 			{
 				rotate(b);
-				ft_printf("rb\n");
+				if (verbose)
+					ft_printf("rb\n");
+				inst_num++;
 			}
 			b_rot--;
 		}
 	}
+	return (inst_num);
 }
 
 int	get_best_insert(t_stack a, t_stack b)

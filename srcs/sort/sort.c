@@ -6,25 +6,33 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 23:24:44 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:49:42 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-void	sort_3(t_stack *a)
+int	sort_3(t_stack *a, int verbose)
 {
+	int	inst_num;
+
+	inst_num = 0;
 	if (a->stack[2] > a->stack[1])
 	{
 		swap(a);
-		ft_printf("sa\n");
+		if (verbose)
+			ft_printf("sa\n");
+		inst_num++;
 	}
 	if (a->stack[1] > a->stack[0])
 	{
 		rev_rotate(a);
-		ft_printf("rra\n");
-		sort_3(a);
+		if (verbose)
+			ft_printf("rra\n");
+		inst_num++;
+		inst_num += sort_3(a, verbose);
 	}
+	return (inst_num);
 }
 
 /*
@@ -55,32 +63,144 @@ void	sort_3(t_stack *a)
 	}
 */
 
+void	stack_dup(t_stack st, t_stack *dup)
+{
+	int		cur;
+
+	dup->len = st.len;
+	dup->first = st.first;
+	dup->stack = malloc(sizeof(int) * dup->len);
+	if (!dup->stack)
+		exit(EXIT_FAILURE);
+	cur = 0;
+	while (cur < dup->len)
+	{
+		dup->stack[cur] = st.stack[cur];
+		cur++;
+	}
+}
+
+int	dry_push_b(t_stack a, t_stack b)
+{
+	t_stack	tmp_a;
+	t_stack	tmp_b;
+	int		first;
+	int		last_kept;
+
+	stack_dup(a, &tmp_a);
+	stack_dup(b, &tmp_b);
+
+	first = tmp_a.first;
+	last_kept = first;
+	rotate(&tmp_a);
+	while (tmp_a.first != first && tmp_a.len)
+	{
+		if (tmp_a.first > last_kept)
+		{
+			last_kept = tmp_a.first;
+			rotate(&tmp_a);
+		}
+		else
+		{
+			push(&tmp_b, &tmp_a);
+		}
+	}
+
+
+	//free(tmp_a.stack);
+	//free(tmp_b.stack);
+	return (tmp_a.len);
+}
+
+void	print_stacks(t_stack a, t_stack b, char *line)
+{
+	int	len;
+	int	cur;
+
+	len = a.len;
+	if (b.len > len)
+		len = b.len;
+	cur = 0;
+	ft_printf(" > %s", line);
+	ft_printf("+------A-------+------B------+\n");
+	while (cur < len)
+	{
+		if (a.len > cur && b.len > cur)
+			ft_printf("| % 11d | %-11d |\n",
+				a.stack[a.len - 1 - cur], b.stack[b.len - 1 - cur]);
+		else if (a.len > cur)
+			ft_printf("| % 11d | %11c |\n", a.stack[a.len - 1 - cur], ' ');
+		else if (b.len > cur)
+			ft_printf("| %12c | %-11d |\n", ' ', b.stack[b.len - 1 - cur]);
+		cur++;
+	}
+	ft_printf("+--------------+-------------+\n");
+}
+
+int	dry_sort_one(t_stack a, t_stack b)
+{
+	int		best_insert;
+	int		insert_pos;
+	int		inst_num;
+
+	inst_num = 0;
+	while (a.len > 3)
+	{
+		push(&b, &a);
+		inst_num++;
+	}
+
+	inst_num += sort_3(&a, 0);
+	while (b.len)
+	{
+		best_insert = get_best_insert(a, b);
+		insert_pos = get_insert_pos(a, best_insert);
+		inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
+		push(&a, &b);
+		inst_num++;
+	}
+	inst_num += min_top(&a, 'a', 0);
+	return (inst_num);
+}
+
 void	sort_more(t_stack *a, t_stack *b)
 {
+	int	best_insert;
+	int	insert_pos;
+
+	t_stack t_a;
+	t_stack t_b;
+	stack_dup(*a, &t_a);
+	stack_dup(*b, &t_b);
+	ft_printf("inst_num : %d, %d\n", dry_sort_one(t_a, t_b), t_a.first);
+
 	while (a->len > 3)
 	{
 		push(b, a);
 		ft_printf("pb\n");
 	}
-	sort_3(a);
+	sort_3(a, 1);
 	while (b->len)
 	{
-		int best_insert = get_best_insert(*a, *b);
-		int insert_pos = get_insert_pos(*a, best_insert);
-		rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1);
+		best_insert = get_best_insert(*a, *b);
+		insert_pos = get_insert_pos(*a, best_insert);
+		rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
 		push(a, b);
 		ft_printf("pa\n");
 	}
-	min_top(a, 'a');
+	min_top(a, 'a', 1);
 }
 
 void	sort(t_stack *a, t_stack *b)
 {
+
 	if (!is_sorted(*a))
 	{
 		if (a->len <= 3)
-			sort_3(a);
+			sort_3(a, 1);
 		else if (a->len > 3)
 			sort_more(a, b);
 	}
+
+
 }
