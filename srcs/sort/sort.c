@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/08 17:49:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 09:00:27 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ void	print_stacks(t_stack a, t_stack b, char *line)
 
 int	dry_sort_one(t_stack a, t_stack b)
 {
-	int		best_insert;
-	int		insert_pos;
+	//int		best_insert;
+	//int		insert_pos;
 	int		inst_num;
 
 	inst_num = 0;
@@ -149,8 +149,9 @@ int	dry_sort_one(t_stack a, t_stack b)
 		push(&b, &a);
 		inst_num++;
 	}
-
+	//ft_printf("find duplicates : %d\n", find_duplicates(a));
 	inst_num += sort_3(&a, 0);
+	/*
 	while (b.len)
 	{
 		best_insert = get_best_insert(a, b);
@@ -160,26 +161,114 @@ int	dry_sort_one(t_stack a, t_stack b)
 		inst_num++;
 	}
 	inst_num += min_top(&a, 'a', 0);
+	*/
 	return (inst_num);
+}
+
+int	dry_sort_two(t_stack a, t_stack b)
+{
+	//int		best_insert;
+	//int		insert_pos;
+	int		inst_num;
+
+	int	median;
+	int	last_kept;
+
+	median = a.first;
+	inst_num = 0;
+	last_kept = median;
+	rotate(&a);
+	inst_num++;
+	while (a.first != median)
+	{
+		if (a.first > last_kept)
+		{
+			last_kept = a.first;
+			rotate(&a);
+			inst_num++;
+		}
+		else
+		{
+			push(&b, &a);
+			inst_num++;
+		}
+		if (find_duplicates(b))
+		{
+			ft_printf("dup\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	/*
+	while (b.len)
+	{
+		best_insert = get_best_insert(a, b);
+		insert_pos = get_insert_pos(a, best_insert);
+		inst_num += rotate_both_to(&a, insert_pos, &b, get_pos(b, best_insert) + 1, 0);
+		push(&a, &b);
+		inst_num++;
+	}
+	inst_num += min_top(&a, 'a', 0);
+	*/
+	return (inst_num);
+}
+
+int	compare_sort(t_stack a, t_stack b)
+{
+	t_stack	t_a;
+	t_stack	t_b;
+	int		sort_one;
+	int		sort_two;
+
+	stack_dup(a, &t_a);
+	stack_dup(b, &t_b);
+	sort_one = dry_sort_one(t_a, t_b);
+	free(t_a.stack);
+	free(t_b.stack);
+	stack_dup(a, &t_a);
+	stack_dup(b, &t_b);
+	sort_two = dry_sort_two(t_a, t_b);
+	if (sort_two < sort_one && sort_two > 0)
+		return (1);
+	return (0);
 }
 
 void	sort_more(t_stack *a, t_stack *b)
 {
 	int	best_insert;
 	int	insert_pos;
+	int	median;
+	int	last_kept;
 
-	t_stack t_a;
-	t_stack t_b;
-	stack_dup(*a, &t_a);
-	stack_dup(*b, &t_b);
-	ft_printf("inst_num : %d, %d\n", dry_sort_one(t_a, t_b), t_a.first);
-
-	while (a->len > 3)
+	if (compare_sort(*a, *b))
 	{
-		push(b, a);
-		ft_printf("pb\n");
+		median = a->first;
+		last_kept = median;
+		rotate(a);
+		ft_printf("ra\n");
+		while (a->first != median)
+		{
+			if (a->first > last_kept)
+			{
+				last_kept = a->first;
+				rotate(a);
+				ft_printf("ra\n");
+			}
+			else
+			{
+				push(b, a);
+				ft_printf("pb\n");
+			}
+		}
 	}
-	sort_3(a, 1);
+	else
+	{
+		while (a->len > 3)
+		{
+			push(b, a);
+			ft_printf("pb\n");
+		}
+		sort_3(a, 1);
+	}
 	while (b->len)
 	{
 		best_insert = get_best_insert(*a, *b);
@@ -193,7 +282,6 @@ void	sort_more(t_stack *a, t_stack *b)
 
 void	sort(t_stack *a, t_stack *b)
 {
-
 	if (!is_sorted(*a))
 	{
 		if (a->len <= 3)
@@ -201,6 +289,4 @@ void	sort(t_stack *a, t_stack *b)
 		else if (a->len > 3)
 			sort_more(a, b);
 	}
-
-
 }

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/08 17:16:54 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 08:55:42 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	get_insert_pos(t_stack st, int num)
 			return (cur);
 		cur++;
 	}
-	ft_printf("bizz");
+	//ft_printf("bizz");
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:58:47 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 11:52:30 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 08:42:30 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	rotate(t_stack *st)
 		cur = st->len;
 		first = st->stack[st->len - 1];
 		while (cur--)
-		{
 			st->stack[cur] = st->stack[cur - 1];
-		}
 		st->stack[0] = first;
 	}
 	st->first = st->stack[st->len - 1];
