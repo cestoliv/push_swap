@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:47:55 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 11:57:44 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:42:53 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,51 @@ int	sort_3(t_stack *a, int verbose)
 	int	inst_num;
 
 	inst_num = 0;
+
+	if (a->stack[2] > a->stack[1] && a->stack[1] < a->stack[0] && a->stack[2] > a->stack[0])
+	{
+		//ft_printf("%d > %d > %d\n", a->stack[2], a->stack[1], a->stack[0]);
+		rotate(a);
+		if (verbose)
+			ft_printf("ra\n");
+		inst_num++;
+	}
+
+	if (a->stack[2] > a->stack[1] && a->stack[1] > a->stack[0])
+	{
+		//ft_printf("%d > %d > %d\n", a->stack[2], a->stack[1], a->stack[0]);
+		rotate(a);
+		if (verbose)
+			ft_printf("ra\n");
+		inst_num++;
+	}
+
+	if (a->stack[1] > a->stack[0])
+	{
+		//ft_printf("%d > %d > %d\n", a->stack[2], a->stack[1], a->stack[0]);
+		rev_rotate(a);
+		if (verbose)
+			ft_printf("rra\n");
+		inst_num++;
+	}
+
 	if (a->stack[2] > a->stack[1])
 	{
+		//ft_printf("%d > %d > %d\n", a->stack[2], a->stack[1], a->stack[0]);
 		swap(a);
 		if (verbose)
 			ft_printf("sa\n");
 		inst_num++;
 	}
+	/*
 	if (a->stack[1] > a->stack[0])
 	{
 		rev_rotate(a);
 		if (verbose)
 			ft_printf("rra\n");
 		inst_num++;
-		inst_num += sort_3(a, verbose);
 	}
+	*/
 	return (inst_num);
 }
 
@@ -300,55 +330,17 @@ int	compare_sort(t_stack a, t_stack b)
 	return (0);
 }
 
-void	sort_more(t_stack *a, t_stack *b)
+void	sort_5(t_stack *a, t_stack *b)
 {
 	int	best_insert;
 	int	insert_pos;
-	int	median;
-	int	last_kept;
-	int	algo;
 
-
-	algo = compare_sort(*a, *b);
-	if (algo)
+	while (a->len > 3)
 	{
-		//if (algo == 1)
-		median = a->first;
-		/*
-		else
-		{
-			median = get_median(*a);
-			rotate_to(a, get_pos(*a, median), 'a', 1);
-		}
-		*/
-		last_kept = median;
-		rotate(a);
-		ft_printf("ra\n");
-		while (a->first != median)
-		{
-			if (a->first > last_kept)
-			{
-				last_kept = a->first;
-				rotate(a);
-				ft_printf("ra\n");
-			}
-			else
-			{
-				push(b, a);
-				ft_printf("pb\n");
-			}
-		}
-
+		push(b, a);
+		ft_printf("pb\n");
 	}
-	else
-	{
-		while (a->len > 3)
-		{
-			push(b, a);
-			ft_printf("pb\n");
-		}
-		sort_3(a, 1);
-	}
+	sort_3(a, 1);
 	while (b->len)
 	{
 		best_insert = get_best_insert(*a, *b);
@@ -370,13 +362,83 @@ void	sort_more(t_stack *a, t_stack *b)
 	min_top(a, 'a', 1);
 }
 
+void	sort_more(t_stack *a, t_stack *b)
+{
+	int	best_insert;
+	int	insert_pos;
+	int	median;
+	int	last_kept;
+
+	median = a->first;
+
+	//median = get_best_median(*a);
+	//ft_printf("med : %d, pos = %d\n", median, get_pos(*a, median));
+	//rotate_to(a, get_pos(*a, median), 'a', 1); // median to top
+
+	last_kept = median;
+	rotate(a);
+	ft_printf("ra\n");
+	while (a->first != median)
+	{
+		if (a->first > last_kept)
+		{
+			last_kept = a->first;
+			rotate(a);
+			ft_printf("ra\n");
+		}
+		else
+		{
+			push(b, a);
+			ft_printf("pb\n");
+		}
+	}
+
+	while (b->len)
+	{
+		best_insert = get_best_insert(*a, *b);
+		insert_pos = get_insert_pos(*a, best_insert);
+
+		if (b->len == 1)
+			rotate_to(a, insert_pos - 1, 'a', 1);
+		else
+			rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
+
+		//rotate_both_to(a, insert_pos, b, get_pos(*b, best_insert) + 1, 1);
+		push(a, b);
+		ft_printf("pa\n");
+	}
+	min_top(a, 'a', 1);
+}
+
 void	sort(t_stack *a, t_stack *b)
 {
+	//ft_printf("first : %d\n", a->first);
+	//ft_printf("count : %d\n", count_kept_in_a(*a, 3));
 	if (!is_sorted(*a))
 	{
-		if (a->len <= 3)
+		if (a->len == 2)
+		{
+			if (a->first > a->stack[0])
+			{
+				rotate(a);
+				ft_printf("ra\n");
+			}
+		}
+		else if (a->len <= 3)
 			sort_3(a, 1);
-		else if (a->len > 3)
+		else
+		{
+			if (count_kept_in_a(*a, a->first > 3))
+				sort_more(a, b);
+			else
+				sort_5(a, b);
+		}
+		/*
+
+		else if (a->len <= 5)
+			sort_5(a, b);
+		else
 			sort_more(a, b);
+			*/
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 09:13:12 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:30:54 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	sort(t_stack *a, t_stack *b);
 // median.c
 int		get_median(t_stack a);
 int		get_min_after(t_stack st, int stop);
+int		count_kept_in_a(t_stack a, int num);
+int		get_best_median(t_stack a);
 // parse.c
 int		number_of_digits(int argc, char **argv);
 int		fill_stack(t_stack *a, int num_digit, char **argv);

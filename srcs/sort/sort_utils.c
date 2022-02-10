@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 11:57:36 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:29:05 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int	get_insert_pos(t_stack st, int num)
 	while (cur < st.len)
 	{
 		before = st.stack[cur];
-		after = st.stack[cur - 1];
 		if (cur == 0)
 			after = st.stack[st.len - 1];
+		else
+			after = st.stack[cur - 1];
 		if (num > get_max(st) && before == get_max(st))
 			return (cur);
 		else if (num < get_min(st) && after == get_min(st))

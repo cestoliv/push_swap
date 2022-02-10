@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:42:00 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 16:22:41 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:29:32 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,60 @@ int	get_min_after(t_stack st, int stop)
 		cur++;
 	}
 	return (sorted_stack[cur - 1]);
+}
+
+int	count_kept_in_a(t_stack a, int num)
+{
+	int	pivot_pos;
+	int	total;
+	int	cur;
+
+	total = 0;
+	pivot_pos = get_pos(a, num);
+	cur = pivot_pos;
+	while (cur >= 0)
+	{
+		if (a.stack[cur] > num)
+		{
+			num = a.stack[cur];
+			total++;
+		}
+		cur--;
+	}
+	cur = a.len - 1;
+	while (cur > pivot_pos)
+	{
+		if (a.stack[cur] > num)
+		{
+			num = a.stack[cur];
+			total++;
+		}
+		cur--;
+	}
+	return (total);
+}
+
+int	get_best_median(t_stack a)
+{
+	int	cur;
+	int	best_median;
+	int	best_kept;
+
+	best_kept = count_kept_in_a(a, a.first);
+	cur = 0;
+	while (cur < a.len - 1)
+	{
+		int kept = count_kept_in_a(a, a.stack[cur]);
+
+		int op = cur;
+		if (op / (double)a.len >= 0.5)
+			op = a.len - cur;
+		if (kept > best_kept && op < a.len / 5)
+		{
+			best_kept = kept;
+			best_median = a.stack[cur];
+		}
+		cur++;
+	}
+	return (best_median);
 }
