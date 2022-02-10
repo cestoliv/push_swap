@@ -8,24 +8,23 @@ DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
 P_LST_SRCS	:=	main.c \
-				median.c \
-				parse.c \
-				utils.c \
-				stack/swap.c \
+				parse/parse_utils.c \
+				parse/parse.c \
+				sort/rotate_both.c \
+				sort/sort_utils.c \
+				sort/sort.c \
 				stack/push.c \
 				stack/rotate.c \
-				sort/min_max.c \
-				sort/sort_utils.c \
-				sort/sort.c
+				stack/stack_utils.c \
+				stack/swap.c
 P_LST_OBJS	:=	$(P_LST_SRCS:.c=.o)
 C_LST_SRCS	:=	checker.c \
-				parse.c \
-				utils.c \
-				stack/swap.c \
+				parse/parse_utils.c \
+				parse/parse.c \
 				stack/push.c \
 				stack/rotate.c \
-				sort/min_max.c \
-				sort/sort_utils.c
+				stack/stack_utils.c \
+				stack/swap.c
 C_LST_OBJS	:=	$(C_LST_SRCS:.c=.o)
 LST_INCS	:=	push_swap.h
 
@@ -42,9 +41,7 @@ GREEN		=	\033[32m
 END			=	\033[0m
 
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
-	mkdir -p $(DIR_OBJS)
-	mkdir -p $(DIR_OBJS)/stack
-	mkdir -p $(DIR_OBJS)/sort
+	mkdir -p $(DIR_OBJS)/{parse,sort,stack}
 	$(CC) -D CHECK_VERBOSE=0 -I $(DIR_INCS) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 

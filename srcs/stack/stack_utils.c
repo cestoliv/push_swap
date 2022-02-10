@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   min_max.c                                          :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/31 14:27:35 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 16:17:52 by ocartier         ###   ########.fr       */
+/*   Created: 2022/02/10 15:44:53 by ocartier          #+#    #+#             */
+/*   Updated: 2022/02/10 15:44:54 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ int	get_min(t_stack st)
 	return (min);
 }
 
-int	get_min_pos(t_stack st)
-{
-	int	cur;
-	int	min;
-
-	min = 0;
-	cur = st.len;
-	while (--cur)
-		if (st.stack[cur] < st.stack[min])
-			min = cur;
-	return (min);
-}
-
 int	get_pos(t_stack st, int num)
 {
 	int	cur;
@@ -69,4 +56,18 @@ int	get_pos(t_stack st, int num)
 		cur++;
 	}
 	return (-1);
+}
+
+int	is_sorted(t_stack st)
+{
+	int	cur;
+
+	cur = 0;
+	while (cur < st.len - 1)
+	{
+		if (st.stack[cur] < st.stack[cur + 1])
+			return (0);
+		cur++;
+	}
+	return (1);
 }

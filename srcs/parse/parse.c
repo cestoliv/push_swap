@@ -6,58 +6,28 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:51:21 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/07 16:56:03 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:47:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	number_of_digits(int argc, char **argv)
+int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
 {
-	int	scur;
-	int	ccur;
-	int	total;
+	int		num_digit;
 
-	scur = 0;
-	total = 0;
-	while (scur < argc)
-	{
-		ccur = 0;
-		while (argv[scur][ccur])
-		{
-			if (ft_isdigit(argv[scur][ccur]))
-				if (argv[scur][ccur + 1] == ' ' || !argv[scur][ccur + 1])
-					total += 1;
-			ccur++;
-		}
-		scur++;
-	}
-	return (total);
-}
-
-long	atol(const char *str)
-{
-	int		cur;
-	long	num;
-	int		sign;
-
-	cur = 0;
-	num = 0;
-	sign = 1;
-	while ((str[cur] >= 9 && str[cur] <= 13) || str[cur] == ' ')
-		cur++;
-	if (str[cur] == '+' || str[cur] == '-')
-	{
-		if (str[cur] == '-')
-			sign = -1;
-		cur++;
-	}
-	while (str[cur] >= '0' && str[cur] <= '9')
-	{
-		num = num * 10 + str[cur] - '0';
-		cur++;
-	}
-	return (num * sign);
+	num_digit = number_of_digits(argc, argv);
+	a->len = num_digit;
+	a->stack = malloc(sizeof(int) * num_digit);
+	if (!a->stack)
+		exit(EXIT_FAILURE);
+	b->len = 0;
+	b->stack = malloc(sizeof(int) * num_digit);
+	if (!b->stack)
+		exit(EXIT_FAILURE);
+	if (!is_digit_argv(argc, argv))
+		return (0);
+	return (fill_stack(a, num_digit, argv));
 }
 
 int	fill_stack(t_stack *a, int num_digit, char **argv)

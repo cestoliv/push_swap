@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:46:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/03 12:22:57 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:32:41 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,17 @@
 int	apply_stack_rot(t_stack *a, t_stack *b, char *line)
 {
 	if (!ft_strncmp(line, "ra\n", ft_strlen(line)))
-		rotate(a);
+		rotate(a, 0, 'a');
 	else if (!ft_strncmp(line, "rb\n", ft_strlen(line)))
-		rotate(b);
+		rotate(b, 0, 'b');
 	else if (!ft_strncmp(line, "rr\n", ft_strlen(line)))
-	{
-		rotate(a);
-		rotate(b);
-	}
+		rrotate(a, b, 0);
 	else if (!ft_strncmp(line, "rra\n", ft_strlen(line)))
-		rev_rotate(a);
+		rev_rotate(a, 0, 'a');
 	else if (!ft_strncmp(line, "rrb\n", ft_strlen(line)))
-		rev_rotate(b);
+		rev_rotate(b, 0, 'b');
 	else if (!ft_strncmp(line, "rrr\n", ft_strlen(line)))
-	{
-		rev_rotate(a);
-		rev_rotate(b);
-	}
+		rrev_rotate(a, b, 0);
 	else
 		return (0);
 	return (1);
@@ -43,18 +37,15 @@ int	apply_stack_rot(t_stack *a, t_stack *b, char *line)
 int	apply_stack_op(t_stack *a, t_stack *b, char *line)
 {
 	if (!ft_strncmp(line, "sa\n", ft_strlen(line)))
-		swap(a);
+		swap(a, 0, 'a');
 	else if (!ft_strncmp(line, "sb\n", ft_strlen(line)))
-		swap(b);
+		swap(b, 0, 'b');
 	else if (!ft_strncmp(line, "ss\n", ft_strlen(line)))
-	{
-		swap(a);
-		swap(b);
-	}
+		sswap(a, b, 0);
 	else if (!ft_strncmp(line, "pa\n", ft_strlen(line)))
-		push(a, b);
+		push(a, b, 0, 'a');
 	else if (!ft_strncmp(line, "pb\n", ft_strlen(line)))
-		push(b, a);
+		push(b, a, 0, 'b');
 	else if (!apply_stack_rot(a, b, line))
 		return (0);
 	return (1);

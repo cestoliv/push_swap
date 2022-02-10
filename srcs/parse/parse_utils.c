@@ -6,24 +6,58 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:18:50 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/02 11:37:04 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:47:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	pos_in_stack(t_stack st, int num)
+int	number_of_digits(int argc, char **argv)
 {
-	int	cur;
+	int	scur;
+	int	ccur;
+	int	total;
+
+	scur = 0;
+	total = 0;
+	while (scur < argc)
+	{
+		ccur = 0;
+		while (argv[scur][ccur])
+		{
+			if (ft_isdigit(argv[scur][ccur]))
+				if (argv[scur][ccur + 1] == ' ' || !argv[scur][ccur + 1])
+					total += 1;
+			ccur++;
+		}
+		scur++;
+	}
+	return (total);
+}
+
+long	atol(const char *str)
+{
+	int		cur;
+	long	num;
+	int		sign;
 
 	cur = 0;
-	while (cur < st.len)
+	num = 0;
+	sign = 1;
+	while ((str[cur] >= 9 && str[cur] <= 13) || str[cur] == ' ')
+		cur++;
+	if (str[cur] == '+' || str[cur] == '-')
 	{
-		if (st.stack[cur] == num)
-			return (cur);
+		if (str[cur] == '-')
+			sign = -1;
 		cur++;
 	}
-	return (-1);
+	while (str[cur] >= '0' && str[cur] <= '9')
+	{
+		num = num * 10 + str[cur] - '0';
+		cur++;
+	}
+	return (num * sign);
 }
 
 int	find_duplicates(t_stack st)
@@ -33,7 +67,7 @@ int	find_duplicates(t_stack st)
 	cur = 0;
 	while (cur < st.len)
 	{
-		if (pos_in_stack(st, st.stack[cur]) != cur)
+		if (get_pos(st, st.stack[cur]) != cur)
 			return (1);
 		cur++;
 	}
@@ -74,22 +108,4 @@ int	is_digit_argv(int argc, char **argv)
 		cur++;
 	}
 	return (1);
-}
-
-int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
-{
-	int		num_digit;
-
-	num_digit = number_of_digits(argc, argv);
-	a->len = num_digit;
-	a->stack = malloc(sizeof(int) * num_digit);
-	if (!a->stack)
-		exit(EXIT_FAILURE);
-	b->len = 0;
-	b->stack = malloc(sizeof(int) * num_digit);
-	if (!b->stack)
-		exit(EXIT_FAILURE);
-	if (!is_digit_argv(argc, argv))
-		return (0);
-	return (fill_stack(a, num_digit, argv));
 }

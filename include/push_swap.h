@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:07:25 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/10 10:30:54 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:59:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,34 @@ typedef struct s_stack
 }	t_stack;
 
 // stack/*.c
-void	swap(t_stack *st);
-void	sswap(t_stack *s1, t_stack *s2);
-void	push(t_stack *a, t_stack *b);
-void	rotate(t_stack *st);
-void	rrotate(t_stack *s1, t_stack *s2);
-void	rev_rotate(t_stack *st);
-void	rrev_rotate(t_stack *s1, t_stack *s2);
-// min_max.c
+void	swap(t_stack *st, int verbose, char st_name);
+void	sswap(t_stack *s1, t_stack *s2, int verbose);
+void	push(t_stack *a, t_stack *b, int verbose, char st_name);
+void	rotate(t_stack *st, int verbose, char st_name);
+void	rrotate(t_stack *s1, t_stack *s2, int verbose);
+void	rev_rotate(t_stack *st, int verbose, char st_name);
+void	rrev_rotate(t_stack *s1, t_stack *s2, int verbose);
+// stack/stack_utils.c
 int		get_max(t_stack st);
 int		get_min(t_stack st);
-int		get_min_pos(t_stack st);
 int		get_pos(t_stack st, int num);
-// sort_utils.c
 int		is_sorted(t_stack st);
+// sort/rotate_both.c
+void	rotate_both(t_stack *a, int a_top, t_stack *b, int b_top);
+// sort/sort_utils.c
 int		get_insert_pos(t_stack st, int num);
-int		min_top(t_stack *st, char st_name, int verbose);
-void	min_top_both(t_stack *a, t_stack *b);
+void	min_top(t_stack *st, char st_name);
 int		get_best_insert(t_stack a, t_stack b);
-int		rotate_to(t_stack *st, int st_top, char st_name, int verbose);
-int		rotate_both_to(t_stack *a, int a_top, t_stack *b, int b_top, int verbose);
-// sort.c
-void	sort(t_stack *a, t_stack *b);
-// median.c
-int		get_median(t_stack a);
-int		get_min_after(t_stack st, int stop);
 int		count_kept_in_a(t_stack a, int num);
-int		get_best_median(t_stack a);
-// parse.c
-int		number_of_digits(int argc, char **argv);
-int		fill_stack(t_stack *a, int num_digit, char **argv);
-// utils.c
-int		find_duplicates(t_stack st);
+// sort/sort.c
+void	sort(t_stack *a, t_stack *b);
+// parse/parse_utils.c
 int		make_stacks(t_stack *a, t_stack *b, int argc, char **argv);
+int		fill_stack(t_stack *a, int num_digit, char **argv);
+// parse/parse.c
+int		number_of_digits(int argc, char **argv);
+long	atol(const char *str);
+int		find_duplicates(t_stack st);
+int		is_digit_str(char *str);
+int		is_digit_argv(int argc, char **argv);
 #endif

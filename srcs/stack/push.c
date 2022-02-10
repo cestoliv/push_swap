@@ -6,13 +6,13 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:42:02 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/09 19:29:49 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:20:17 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-void	push(t_stack *a, t_stack *b)
+void	push(t_stack *a, t_stack *b, int verbose, char st_name)
 {
 	if (b->len)
 	{
@@ -25,4 +25,6 @@ void	push(t_stack *a, t_stack *b)
 		else
 			b->first = -1;
 	}
+	if (verbose)
+		ft_printf("p%c\n", st_name);
 }
