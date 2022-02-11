@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:51:21 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/11 07:58:56 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/11 08:23:50 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,18 @@ int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
 	return (fill_stack(a, num_digit, argv));
 }
 
-void	free_splitted(char ***splitted, int pcur)
+int	free_splitted(char ***splitted)
 {
-	while (pcur--)
-		free((*splitted)[pcur]);
+	int	cur;
+
+	cur = 0;
+	while ((*splitted)[cur])
+	{
+		free((*splitted)[cur]);
+		cur++;
+	}
 	free(*splitted);
+	return (0);
 }
 
 int	fill_stack(t_stack *a, int num_digit, char **argv)
@@ -54,13 +61,13 @@ int	fill_stack(t_stack *a, int num_digit, char **argv)
 		while (splitted[pcur])
 		{
 			if (ft_strlen(splitted[pcur]) > 12)
-				return (0);
+				return (free_splitted(&splitted));
 			lnum = atol(splitted[pcur++]);
 			if (lnum > 2147483647 || lnum < -2147483648)
-				return (0);
+				return (free_splitted(&splitted));
 			a->stack[num_digit-- - 1] = (int)lnum;
 		}
-		free_splitted(&splitted, pcur);
+		free_splitted(&splitted);
 	}
 	a->first = a->stack[a->len - 1];
 	return (1);
