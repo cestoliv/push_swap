@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 11:46:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/10 15:32:41 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/11 08:25:45 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	check(t_stack *a, t_stack *b)
 			print_stacks(*a, *b, line);
 		line = get_next_line(0, GNL_KEEP);
 	}
-	if (is_sorted(*a))
+	if (is_sorted(*a) && b->len == 0)
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");
