@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:30:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/10 16:15:51 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/11 07:59:58 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	count_kept_in_a(t_stack a, int num)
 	total = 0;
 	pivot_pos = get_pos(a, num);
 	cur = pivot_pos;
-	while (cur-- >= 0)
+	while (cur-- > 0)
 	{
 		if (a.stack[cur] > num)
 		{

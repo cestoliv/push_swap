@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:51:21 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/10 15:47:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/11 07:58:56 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
 	return (fill_stack(a, num_digit, argv));
 }
 
+void	free_splitted(char ***splitted, int pcur)
+{
+	while (pcur--)
+		free((*splitted)[pcur]);
+	free(*splitted);
+}
+
 int	fill_stack(t_stack *a, int num_digit, char **argv)
 {
 	int		scur;
@@ -46,14 +53,14 @@ int	fill_stack(t_stack *a, int num_digit, char **argv)
 			exit(EXIT_FAILURE);
 		while (splitted[pcur])
 		{
+			if (ft_strlen(splitted[pcur]) > 12)
+				return (0);
 			lnum = atol(splitted[pcur++]);
 			if (lnum > 2147483647 || lnum < -2147483648)
 				return (0);
 			a->stack[num_digit-- - 1] = (int)lnum;
 		}
-		while (pcur--)
-			free(splitted[pcur]);
-		free(splitted);
+		free_splitted(&splitted, pcur);
 	}
 	a->first = a->stack[a->len - 1];
 	return (1);
