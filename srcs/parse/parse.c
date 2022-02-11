@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:51:21 by ocartier          #+#    #+#             */
-/*   Updated: 2022/02/11 08:23:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/02/11 09:07:53 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
 {
 	int		num_digit;
+	int		fill_return;
 
 	num_digit = number_of_digits(argc, argv);
 	a->len = num_digit;
@@ -24,10 +25,20 @@ int	make_stacks(t_stack *a, t_stack *b, int argc, char **argv)
 	b->len = 0;
 	b->stack = malloc(sizeof(int) * num_digit);
 	if (!b->stack)
+	{
+		free(a->stack);
 		exit(EXIT_FAILURE);
+	}
 	if (!is_digit_argv(argc, argv))
 		return (0);
-	return (fill_stack(a, num_digit, argv));
+	fill_return = fill_stack(a, num_digit, argv);
+	if (fill_return == -1)
+	{
+		free(a->stack);
+		free(b->stack);
+		exit(EXIT_FAILURE);
+	}
+	return (fill_return);
 }
 
 int	free_splitted(char ***splitted)
@@ -57,7 +68,7 @@ int	fill_stack(t_stack *a, int num_digit, char **argv)
 		pcur = 0;
 		splitted = ft_split(argv[scur++], ' ');
 		if (!splitted)
-			exit(EXIT_FAILURE);
+			return (-1);
 		while (splitted[pcur])
 		{
 			if (ft_strlen(splitted[pcur]) > 12)
