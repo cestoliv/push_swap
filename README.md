@@ -35,3 +35,5 @@ Stack size 500 (goal : 5500 KO):
 	average	: 5468
 	best	: 5104
 ```
+
+Subject dated January 2022.
